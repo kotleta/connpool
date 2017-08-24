@@ -244,7 +244,7 @@ local function heartbeat_fiber(self)
                 local response
                 local status, err_state = pcall(function()
                         local expr = "return heartbeat('" .. self.configuration.pool_name .. "')"
-                        response = server.conn:timeout(self.HEARTBEAT_TIMEOUT):eval(expr)
+                        response = server.conn:eval(expr, nil, {timeout = self.HEARTBEAT_TIMEOUT})
                 end)
                 -- update local heartbeat table
                 self:update_heartbeat(uri, response, status)
